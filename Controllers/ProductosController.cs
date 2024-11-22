@@ -7,7 +7,7 @@ using persistence;
 
 public class ProductosController : Controller
 {
-    
+
     private readonly ILogger<ProductosController> _logger;
     private readonly ProductoRepository repoProd;
 
@@ -17,17 +17,17 @@ public class ProductosController : Controller
         repoProd = new ProductoRepository();
     }
 
+    [HttpGet("Opciones")]
+    public IActionResult Opciones()
+    {
+        return View();
+    }
 
-    // [HttpGet]
-    // public ActionResult<List<Productos>> GetListarProducto(){
-    //     List<Productos> lista = new List<Productos>();
-
-    //     return lista;
-    // }
-
-    [HttpGet]
-    public IActionResult ObtenerProductos()
-    {   
+    [HttpGet("ListarProductos")]
+    public IActionResult ListarProductos()
+    {
         return View(repoProd.ListarProductos());
     }
+
+
 }
