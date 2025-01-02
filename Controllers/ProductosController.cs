@@ -17,11 +17,6 @@ public class ProductosController : Controller
         repoProd = new ProductoRepository();
     }
 
-    [HttpGet("Opciones")]
-    public IActionResult Opciones()
-    {
-        return View();
-    }
 
     [HttpGet("ListarProductos")]
     public IActionResult ListarProductos()
