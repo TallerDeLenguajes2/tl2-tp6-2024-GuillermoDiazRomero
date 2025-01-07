@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Detalles de Presupuesto";
+}
+@using Models
+@model List<Models.PresupuestosDetalle>
+
+<h1>@ViewData["Title"]</h1>
+
+<section class="container">
+    @if (Model.Count != 0)
+    {
+        <table class="table table-hover table-striped table-bordered text-center table-info">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (PresupuestosDetalle pd in Model)
+                {
+                    <tr>
+                        <td>@pd.Producto.Descripcion</td>
+                        <td>@pd.Producto.Precio</td>
+                        <td>@pd.Cantidad</td>
+                        <td>@(pd.Cantidad * pd.Producto.Precio)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }else{
+        <h2 class="text-center">No se realizó ningun presupuesto</h2>
+    }
+
+    <section class="container text-center">
+        <a class="btn btn-success col-3" asp-controller="Presupuestos" asp-action="ListarPresupuestos">Volver</a>
+    </section>
+</section>

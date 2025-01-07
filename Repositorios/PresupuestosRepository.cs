@@ -46,7 +46,7 @@ public class PresupuestoRepository
         List<PresupuestosDetalle> lista = new List<PresupuestosDetalle>();
         using (SqliteConnection connection = new SqliteConnection(conexionString))
         {
-            var query = "SELECT * FROM PresupuestosDetalles A INNER JOIN Productos B ON A.idProducto = @id = B.idProducto WHERE A.idProducto = @id";
+            var query = "SELECT * FROM PresupuestosDetalle A INNER JOIN Productos B ON A.idProducto = B.idProducto WHERE A.idPresupuesto = @id";
             connection.Open();
             SqliteCommand command = new SqliteCommand(query, connection);
             command.Parameters.AddWithValue("@id", idPresupuesto);
