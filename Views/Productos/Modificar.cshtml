@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Modificar Productos";
+}
+@model Models.Producto
+
+<section>
+    <h1 class="fw-light">@ViewData["Title"]</h1>
+    <form asp-controller="Productos" asp-action="ModificarProducto" method="post" class="bg-light container-fluid">
+        <legend>Producto n° @Model.IdProducto</legend>
+        <input type="hidden" asp-for="IdProducto">
+        <section class="form-group py-1">
+            <label for="Descripcion" class="form-label">Descripción:</label>
+            <input type="text" class="form-control" asp-for="Descripcion" required>
+        </section>
+        <section class="form-group py-1">
+            <label for="Precio">Precio:</label>
+            <input type="number" class="form-control" asp-for="Precio" required>
+        </section>
+        <section class="text-center form-group align-items-center">
+            <input type="submit" class="btn btn-warning col-2 m-3" value="Actualizar">
+            <a class="btn btn-success col-2 m-3" asp-area="" asp-controller="Productos" asp-action="ListarProductos">Volver</a>
+        </section>
+    </form>
+</section>

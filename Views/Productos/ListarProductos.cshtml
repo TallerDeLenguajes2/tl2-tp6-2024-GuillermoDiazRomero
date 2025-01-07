@@ -2,12 +2,12 @@
     ViewData["Title"] = "Listar Productos";
 }
 @using Models
-@model List<Models.Productos>
+@model List<Models.Producto>
 
 <h1>@ViewData["Title"]</h1>
 <br>
 
-<section class="container d-flex flex-column">
+<section class="container-fluid d-flex flex-column align-items-center">
     <table class="table table-bordered table-hover">
         <thead>
             <tr class="text-center table-info">
@@ -18,17 +18,18 @@
                 <th scope="col">Eliminar</th>
             </tr>
         </thead>
-        <tbody>@foreach (Productos prod in Model)
+        <tbody>@foreach (Producto prod in Model)
             {
                 <tr>
-                    <td class="text-center">@prod.IdProducto</td>
-                    <td>@prod.Descripcion</td>
-                    <td>@prod.Precio</td>
-                    <td class="text-center"><a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="ModificarProducto">Modificar</a></td>
-                    <td class="text-center"><a href="">Eliminar</a></td>
+                    <td class="text-center align-middle">@prod.IdProducto</td>
+                    <td class="align-middle">@prod.Descripcion</td>
+                    <td class="text-center align-middle">@prod.Precio</td>
+                    <td class="text-center"><a class="nav-link text-dark btn btn-outline-warning" asp-area="" asp-controller="Productos" asp-action="Modificar" asp-route-id="@prod.IdProducto">Modificar</a></td>
+                    <td class="text-center"><a class="nav-link text-dark btn btn-outline-danger" asp-area="" asp-controller="Productos" asp-action="Eliminar" asp-route-id="@prod.IdProducto">Eliminar</a></td>
                 </tr>
             }
         </tbody>
     </table>
-    <button class="btn btn-outline-success text-center  justify-content-center">Agregar Producto</button>
+
+    <a class="btn btn-outline-success col-3" asp-area="" asp-controller="Productos" asp-action="Agregar">Agregar Producto</a>
 </section>

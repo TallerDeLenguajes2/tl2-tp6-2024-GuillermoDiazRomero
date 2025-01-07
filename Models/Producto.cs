@@ -1,17 +1,18 @@
 namespace Models;
 
 
-public class Productos{
+public class Producto{
     private int idProducto;
     private string descripcion;
     private int precio;
 
-    public Productos(int idProducto, string descripcion, int precio)
+    public Producto(int idProducto, string descripcion, int precio)
     {
         this.idProducto = idProducto;
         this.descripcion = descripcion;
         this.precio = precio;
     }
+    public Producto(){}
 
     public int IdProducto { get => idProducto; set => idProducto = value; }
     public string Descripcion { get => descripcion; set => descripcion = value; }

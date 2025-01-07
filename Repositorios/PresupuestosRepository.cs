@@ -54,7 +54,7 @@ public class PresupuestoRepository
             {
                 while (reader.Read())
                 {
-                    Productos prod = new Productos(Convert.ToInt32(reader["idProducto"]), Convert.ToString(reader["Descripcion"]) ?? "No tiene descripcion", Convert.ToInt32(reader["Precio"]));
+                    Producto prod = new Producto(Convert.ToInt32(reader["idProducto"]), Convert.ToString(reader["Descripcion"]) ?? "No tiene descripcion", Convert.ToInt32(reader["Precio"]));
                     PresupuestosDetalle presProd = new PresupuestosDetalle(prod, Convert.ToInt32(reader["Cantidad"]));
                     lista.Add(presProd);
                 }
