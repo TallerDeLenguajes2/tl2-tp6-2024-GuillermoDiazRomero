@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<section class="container">
+<section class="container text-center">
     <table class="table table-hover table-striped table-bordered text-center table-info">
         <thead>
             <tr>
@@ -17,15 +17,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Presupuestos p in Model){
+            @foreach (Presupuestos p in Model)
+            {
                 <tr>
                     <td>@p.IdPresupuesto</td>
                     <td>@p.NombreDestinatario</td>
                     <td>@p.FechaCreacion</td>
-                    <td><a class="btn btn-outline-secondary" asp-controller="Presupuestos" asp-action="Detalle" asp-route-id="@p.IdPresupuesto">Ver</a></td>
+                    <td><a class="btn btn-outline-secondary" asp-controller="Presupuestos" asp-action="Detalle"
+                            asp-route-id="@p.IdPresupuesto">Ver</a></td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <a class="btn btn-outline-success col-3" asp-area="" asp-controller="Presupuestos" asp-action="Crear">Crear Presupuesto</a>
 
 </section>

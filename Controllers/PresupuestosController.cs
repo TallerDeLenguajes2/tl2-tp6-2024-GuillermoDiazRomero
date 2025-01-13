@@ -23,4 +23,20 @@ public class PresupuestosController : Controller
     public IActionResult Detalle(int id){
         return View (repoPresu.ObtenerDetalles(id));
     }
+
+    [HttpGet("Crear")]
+    public IActionResult Crear(){
+        return View ();
+    }
+
+    [HttpPost("NuevoPresupuestoString")]
+    public IActionResult NuevoPresupuesto([FromForm] string nomDestinatario)
+    {
+        Presupuestos nuevoPresupuesto = new Presupuestos();
+        nuevoPresupuesto.NombreDestinatario = nomDestinatario;
+        nuevoPresupuesto.FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd");
+        nuevoPresupuesto.Detalle = new List<PresupuestosDetalle>();
+        repoPresu.CrearPresupuesto(nuevoPresupuesto);
+        return RedirectToAction("ListarPresupuestos");
+    }
 }

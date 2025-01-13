@@ -10,7 +10,7 @@ public class PresupuestoRepository
     {
         using (SqliteConnection connection = new SqliteConnection(conexionString))
         {
-            var query = "INSERT INTO Presupuestos (NombreDestinatario, FechaCreacion) VALUES (@nomDes,@feCre)";
+            var query = "INSERT INTO Presupuestos (idPresupuesto,NombreDestinatario, FechaCreacion) VALUES ((SELECT MAX(idPresupuesto) FROM Presupuestos)+1,@nomDes,@feCre)";
             connection.Open();
             var command = new SqliteCommand(query, connection);
             command.Parameters.AddWithValue("@nomDes", nuevoPresupuesto.NombreDestinatario);

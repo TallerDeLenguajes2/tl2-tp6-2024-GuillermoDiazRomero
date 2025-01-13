@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Nuevo Presupuesto";
+    DateTime fecha = DateTime.Now;
+    string fechaActual = fecha.ToString("yyyy-MM-dd");
+}
+@model Models.Presupuestos
+
+<section class="container">
+    <h1 class="fw-light">@ViewData["Title"] (@fechaActual)</h1>
+    <form asp-controller="Presupuestos" asp-action="NuevoPresupuestoString" method="post" class="bg-light">
+        <section>
+            <label for="NombreDestinatario" class="form-label">Nombre del destinatario:</label>
+            <input type="text" class="form-control" name="nomDestinatario" required>
+        </section>
+        <section class="m-3 d-flex flex-column align-items-center">
+            <input type="submit" class="btn btn-success col-3" value="Crear">
+            <a class="btn btn-danger col-3 m-2" asp-controller="Presupuestos" asp-action="ListarPresupuestos">Volver</a>
+        </section>
+    </form>
+
+
+</section>
