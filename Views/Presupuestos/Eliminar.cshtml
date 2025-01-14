@@ -1,0 +1,64 @@
+@{
+    ViewData["Title"] = "¿Esta seguro de eliminar este presupuesto de la lista?";
+}
+@using Models
+@model Models.Presupuestos;
+
+<h1 class="text-center fw-light">@ViewData["Title"]</h1>
+
+<table class="table table-info table-bordered text-center table-hover">
+    <thead>
+        <tr>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Fecha Creación</th>
+        </tr>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.IdPresupuesto</td>
+            <td>@Model.NombreDestinatario</td>
+            <td>@Model.FechaCreacion</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h2 class="text-center fw-light">Detalles</h2>
+@if (ViewBag.Objeto1.Count != 0)
+{
+    <table class="table table-hover table-striped table-bordered text-center table-info">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (PresupuestosDetalle pd in ViewBag.Objeto1)
+            {
+                <tr>
+                    <td>@pd.Producto.Descripcion</td>
+                    <td>@pd.Producto.Precio</td>
+                    <td>@pd.Cantidad</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3 class="text-center fw-light m-3">No hay detalles agregados</h3>
+}
+
+<section class="d-flex flex-column align-items-center">
+    <a class="btn btn-danger col-3" asp-area="" asp-controller="Presupuestos" asp-action="EliminarPresupuesto"
+        asp-route-id="@Model.IdPresupuesto">Eliminar</a>
+    <a class="btn btn-success col-3 mt-2" asp-area="" asp-controller="Presupuestos"
+        asp-action="ListarPresupuestos">Volver</a>
+</section>
