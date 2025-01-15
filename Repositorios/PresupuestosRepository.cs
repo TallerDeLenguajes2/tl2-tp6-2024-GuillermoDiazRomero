@@ -87,7 +87,10 @@ public class PresupuestoRepository
     {
         using (SqliteConnection connection = new SqliteConnection(conexionString))
         {
-            var query = "INSERT INTO PresupuestosDetalle (idPresupuesto, idProducto, Cantidad) VALUES (@pres,@prod,@cant)";
+            var query = @"INSERT INTO PresupuestosDetalle (idPresupuesto, idProducto, Cantidad) 
+                        VALUES ((SELECT idPresupuesto FROM Presupuestos WHERE idPresupuesto = @pres),
+                                (SELECT idProducto FROM Productos WHERE idProducto = @prod),
+                                @cant)";
             connection.Open();
             SqliteCommand command = new SqliteCommand(query, connection);
             command.Parameters.AddWithValue("@pres", idPresupuesto);

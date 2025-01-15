@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Detalles de Presupuesto";
+    ViewData["Title"] = "Detalles de Presupuesto n° "+ ViewBag.Id;
 }
 @using Models
 @model List<Models.PresupuestosDetalle>
@@ -35,7 +35,8 @@
         <h2 class="text-center">No se realizó ningun presupuesto</h2>
     }
 
-    <section class="container text-center">
+    <section class="container d-flex flex-column align-items-center">
+        <a class="btn btn-info col-3 m-3" asp-controller="Presupuestos" asp-action="Agregar" asp-route-id="@ViewBag.Id">Agregar</a>
         <a class="btn btn-success col-3" asp-controller="Presupuestos" asp-action="ListarPresupuestos">Volver</a>
     </section>
 </section>

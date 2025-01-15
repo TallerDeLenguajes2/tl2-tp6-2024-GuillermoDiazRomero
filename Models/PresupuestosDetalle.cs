@@ -9,6 +9,7 @@ public class PresupuestosDetalle{
         this.producto = producto;
         this.cantidad = cantidad;
     }
+    public PresupuestosDetalle(){}
 
     public Producto Producto { get => producto; set => producto = value; }
     public int Cantidad { get => cantidad; set => cantidad = value; }

@@ -9,9 +9,11 @@ public class PresupuestosController : Controller
 {
     private readonly ILogger<PresupuestosController> _logger;
     private readonly PresupuestoRepository repoPresu;
+    private readonly ProductoRepository repoProd;
     public PresupuestosController(ILogger<PresupuestosController> logger){
         _logger = logger;
         repoPresu = new PresupuestoRepository();
+        repoProd = new ProductoRepository();
     }
 
     [HttpGet("ListarPresupuestos")]
@@ -21,6 +23,7 @@ public class PresupuestosController : Controller
 
     [HttpGet("Detalle")]
     public IActionResult Detalle(int id){
+        ViewBag.Id = id;
         return View(repoPresu.ObtenerDetalles(id));
     }
 
@@ -54,8 +57,6 @@ public class PresupuestosController : Controller
     }
 
     
-
-
     [HttpGet("Modificar")]
     public IActionResult Modificar(int id){
         return View(repoPresu.ObtenerPresupuesto(id));
@@ -65,4 +66,18 @@ public class PresupuestosController : Controller
         repoPresu.ModificarPresupuesto(nuevoP.IdPresupuesto,nuevoP);
         return RedirectToAction("ListarPresupuestos");
     }
+
+    [HttpGet("Agregar")]
+    public IActionResult Agregar(int id){
+        ViewBag.Id = id;
+        ViewBag.ListaProductos = repoProd.ListarProductos();
+        return View();
+    }
+
+    [HttpPost("AgregarProducto/{id}")]
+    public IActionResult AgregarProducto([FromRoute]int id, [FromForm] int Producto, [FromForm] int Cantidad){
+        repoPresu.AgregarPresupuesto(id,Producto,Cantidad);
+        return RedirectToAction("ListarPresupuestos");
+    }
+
 }
