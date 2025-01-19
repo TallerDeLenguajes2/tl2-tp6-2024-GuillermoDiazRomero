@@ -1,21 +1,25 @@
 @{
     ViewData["Title"] = "Agregar Producto";
 }
-@model Models.Producto
+@model Models.ProductoViewModel
 
 <section>
     <h1 class="fw-light">@ViewData["Title"]</h1>
     <form asp-controller="Productos" asp-action="CrearProducto" method="post" class="bg-light container-fluid">
         <section class="form-group py-1">
-            <label for="Descripcion" class="form-label">Descripción:</label>
-            <input type="text" class="form-control" asp-for="Descripcion" required>
+            <label asp-for="Descripcion" class="form-label">Descripción:</label>
+            <input asp-for="Descripcion" class="form-control" required>
+            <span asp-validation-for="Descripcion"></span>
         </section>
         <section class="form-group py-1">
-            <label for="Precio">Precio:</label>
-            <input type="number" class="form-control" asp-for="Precio" required>
+            <label asp-for="Precio">Precio:</label>
+            <input asp-for="Precio" class="form-control"  required>
+            <span asp-validation-for="Precio"></span>
         </section>
         <section class="text-center form-group py-3">
             <input type="submit" class="btn btn-success col-2" value="Actualizar">
         </section>
     </form>
 </section>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}

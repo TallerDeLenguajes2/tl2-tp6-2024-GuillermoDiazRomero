@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
 using persistence;
 [ApiController]
@@ -10,6 +11,7 @@ public class PresupuestosController : Controller
     private readonly ILogger<PresupuestosController> _logger;
     private readonly PresupuestoRepository repoPresu;
     private readonly ProductoRepository repoProd;
+    private readonly ClienteRepository repoClien;
     public PresupuestosController(ILogger<PresupuestosController> logger){
         _logger = logger;
         repoPresu = new PresupuestoRepository();
@@ -29,14 +31,25 @@ public class PresupuestosController : Controller
 
     [HttpGet("Crear")]
     public IActionResult Crear(){
-        return View ();
+        var clientes = repoClien.ListarClientes()
+                                      .Select(c => new SelectListItem()
+                                            {
+                                                Value = c.IdCliente.ToString(),
+                                                Text = c.Nombre
+                                            });
+    return View(new CrearPresupuestoViewModel(clientes));
     }
 
     [HttpPost("NuevoPresupuestoString")]
-    public IActionResult NuevoPresupuesto([FromForm] string nomDestinatario)
+    public IActionResult NuevoPresupuesto([FromForm] int idCliente)
     {
+        if (!ModelState.IsValid)
+        {
+            return View("Crear");
+        }
         Presupuestos nuevoPresupuesto = new Presupuestos();
-        nuevoPresupuesto.NombreDestinatario = nomDestinatario;
+        Cliente cliente = repoClien.ObtenerCliente(idCliente);
+        nuevoPresupuesto.Cliente = cliente;
         nuevoPresupuesto.FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd");
         nuevoPresupuesto.Detalle = new List<PresupuestosDetalle>();
         repoPresu.CrearPresupuesto(nuevoPresupuesto);
@@ -69,9 +82,13 @@ public class PresupuestosController : Controller
 
     [HttpGet("Agregar")]
     public IActionResult Agregar(int id){
-        ViewBag.Id = id;
-        ViewBag.ListaProductos = repoProd.ListarProductos();
-        return View();
+        var productos = repoProd.ListarProductos()
+                                      .Select(c => new SelectListItem()
+                                            {
+                                                Value = c.IdProducto.ToString(),
+                                                Text = c.Descripcion.ToString(),
+                                            });
+        return View(new AgregarProductoPresupuesto(productos));
     }
 
     [HttpPost("AgregarProducto/{id}")]

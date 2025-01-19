@@ -44,6 +44,9 @@ public class ProductosController : Controller
     [HttpPost("CrearProducto")]
     public IActionResult CrearProducto([FromForm]Producto prod)
     {
+        if(!ModelState.IsValid){
+            return View("Agregar");
+        }
         repoProd.CrearProducto(prod);
         return RedirectToAction("ListarProductos");
     }

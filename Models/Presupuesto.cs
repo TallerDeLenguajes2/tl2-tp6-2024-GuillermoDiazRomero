@@ -2,28 +2,28 @@ namespace Models;
 
 public class Presupuestos{
     private int idPresupuesto;
-    private string nombreDestinatario;
+    private Cliente cliente;
     private string? fechaCreacion;
     List<PresupuestosDetalle>? detalle;
 
-    public Presupuestos(int idPresupuesto, string nombreDestinatario, string fechaCreacion, List<PresupuestosDetalle> detalle)
+    public Presupuestos(int idPresupuesto, Cliente cliente, string fechaCreacion, List<PresupuestosDetalle> detalle)
     {
         this.idPresupuesto = idPresupuesto;
-        this.nombreDestinatario = nombreDestinatario;
+        this.Cliente = cliente;
         this.fechaCreacion = fechaCreacion;
         this.Detalle = detalle;
     }
-    public Presupuestos(int idPresupuesto, string nombreDestinatario, string fechaCreacion)
+    public Presupuestos(int idPresupuesto, Cliente cliente, string fechaCreacion)
     {
         this.idPresupuesto = idPresupuesto;
-        this.nombreDestinatario = nombreDestinatario;
+        this.Cliente = cliente;
         this.fechaCreacion = fechaCreacion;
         Detalle = new List<PresupuestosDetalle>();
     }
 
-    public Presupuestos(string nombreDestinatario)
+    public Presupuestos(Cliente cliente) 
     {
-        this.nombreDestinatario = nombreDestinatario;
+        this.Cliente = cliente;
         Detalle = new List<PresupuestosDetalle>();
 
     }
@@ -32,7 +32,7 @@ public class Presupuestos{
 
 
     public int IdPresupuesto { get => idPresupuesto; set => idPresupuesto = value; }
-    public string NombreDestinatario { get => nombreDestinatario; set => nombreDestinatario = value; }
+    public Cliente Cliente { get => cliente; set => cliente = value; }
     public List<PresupuestosDetalle>? Detalle { get => detalle; set => detalle = value; }
     public string? FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
 

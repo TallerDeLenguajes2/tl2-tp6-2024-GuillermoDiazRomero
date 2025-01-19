@@ -23,7 +23,7 @@
             {
                 <tr>
                     <td>@p.IdPresupuesto</td>
-                    <td>@p.NombreDestinatario</td>
+                    <td>@p.Cliente.Nombre</td>
                     <td>@p.FechaCreacion</td>
                     <td><a class="btn btn-secondary" asp-area="" asp-controller="Presupuestos" asp-action="Detalle" asp-route-id="@p.IdPresupuesto">🔍</a></td>
                     <td><a class="btn btn-warning" asp-area="" asp-controller="Presupuestos" asp-action="Modificar" asp-route-id="@p.IdPresupuesto">✏</a></td>

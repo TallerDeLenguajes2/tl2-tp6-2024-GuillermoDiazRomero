@@ -10,10 +10,10 @@ public class PresupuestoRepository
     {
         using (SqliteConnection connection = new SqliteConnection(conexionString))
         {
-            var query = "INSERT INTO Presupuestos (idPresupuesto,NombreDestinatario, FechaCreacion) VALUES ((SELECT MAX(idPresupuesto) FROM Presupuestos)+1,@nomDes,@feCre)";
+            var query = "INSERT INTO Presupuestos (idCliente, FechaCreacion) VALUES (@idClien,@feCre)";
             connection.Open();
             var command = new SqliteCommand(query, connection);
-            command.Parameters.AddWithValue("@nomDes", nuevoPresupuesto.NombreDestinatario);
+            command.Parameters.AddWithValue("@idClien", nuevoPresupuesto.Cliente.IdCliente);
             command.Parameters.AddWithValue("@feCre", nuevoPresupuesto.FechaCreacion);
             command.ExecuteNonQuery();
             connection.Close();
@@ -25,14 +25,15 @@ public class PresupuestoRepository
         List<Presupuestos> Lista = new List<Presupuestos>();
         using (SqliteConnection connection = new SqliteConnection(conexionString))
         {
-            var query = "SELECT * FROM Presupuestos";
+            var query = "SELECT * FROM Presupuestos INNER JOIN Cliente USING(idCliente)";
             connection.Open();
             SqliteCommand command = new SqliteCommand(query, connection);
             using (SqliteDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    Presupuestos presupuestos = new Presupuestos(Convert.ToInt32(reader["idPresupuesto"]), Convert.ToString(reader["NombreDestinatario"]) ?? "NULL", Convert.ToString(reader["FechaCreacion"]) ?? "NULL");
+                    Cliente c = new Cliente(Convert.ToInt32(reader["idCliente"]), Convert.ToString(reader["Nombre"]) ?? "No tiene Nombre", Convert.ToString(reader["Email"]) ?? "No tiene Email", Convert.ToString(reader["Telefono"]) ?? "No tiene Telefono");
+                    Presupuestos presupuestos = new Presupuestos(Convert.ToInt32(reader["idPresupuesto"]), c, Convert.ToString(reader["FechaCreacion"]) ?? "NULL");
                     Lista.Add(presupuestos);
                 }
             }
@@ -46,14 +47,15 @@ public class PresupuestoRepository
         Presupuestos p;
         using (SqliteConnection connection = new SqliteConnection(conexionString))
         {
-            var query = "SELECT * FROM Presupuestos WHERE idPresupuesto = @id";
+            var query = "SELECT * FROM Presupuestos INNER JOIN Cliente USING (idCliente) WHERE idPresupuesto = @id";
             connection.Open();
             SqliteCommand command = new SqliteCommand(query, connection);
             command.Parameters.AddWithValue("@id", id);
             using (SqliteDataReader reader = command.ExecuteReader())
             {
                 reader.Read();
-                p = new Presupuestos(Convert.ToInt32(reader["idPresupuesto"]), Convert.ToString(reader["NombreDestinatario"]) ?? "NULL", Convert.ToString(reader["FechaCreacion"]));
+                Cliente c = new Cliente(Convert.ToInt32(reader["idCliente"]), Convert.ToString(reader["Nombre"]) ?? "No tiene Nombre", Convert.ToString(reader["Email"]) ?? "No tiene Email", Convert.ToString(reader["Telefono"]) ?? "No tiene Telefono");
+                p = new Presupuestos(Convert.ToInt32(reader["idPresupuesto"]), c, Convert.ToString(reader["FechaCreacion"]) ?? "No tiene fecha de creación");
                 connection.Close();
             }
         }
@@ -123,14 +125,16 @@ public class PresupuestoRepository
         }
     }
 
-    public void ModificarPresupuesto(int id, Presupuestos p){
-        using (SqliteConnection connection = new SqliteConnection(conexionString)){
+    public void ModificarPresupuesto(int id, Presupuestos p)
+    {
+        using (SqliteConnection connection = new SqliteConnection(conexionString))
+        {
             connection.Open();
-            var query = "UPDATE Presupuestos SET NombreDestinatario = @nom, FechaCreacion = @fec WHERE idPresupuesto = @id";
+            var query = "UPDATE Presupuestos SET ClienteId = @idClien, FechaCreacion = @fec WHERE idPresupuesto = @id";
             SqliteCommand command = new SqliteCommand(query, connection);
-            command.Parameters.AddWithValue("@id",id);
-            command.Parameters.AddWithValue("@nom",p.NombreDestinatario);
-            command.Parameters.AddWithValue("@fec",p.FechaCreacion);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@idClien", p.Cliente.IdCliente);
+            command.Parameters.AddWithValue("@fec", p.FechaCreacion);
             command.ExecuteNonQuery();
             connection.Close();
         }

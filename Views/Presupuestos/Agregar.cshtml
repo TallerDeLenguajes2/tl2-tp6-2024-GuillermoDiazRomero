@@ -1,24 +1,20 @@
-@using Models
-@model Models.PresupuestosDetalle
+@model Models.AgregarProductoPresupuesto
 @{
     ViewData["Title"] = "Agregar Productos al presupuesto n°" + ViewBag.Id.ToString();
 }
+
 
 <h1>@ViewData["Title"]</h1>
 
 <form asp-controller="Presupuestos" asp-action="AgregarProducto" asp-route-id="@ViewBag.Id" method="post" class="bg-light container-fluid">
     <section>
         <label for="Producto">Productos:</label>
-        <select name="Producto" id="Producto" class="form-control" asp-for="Producto" required>
-            @foreach (Producto p in ViewBag.ListaProductos)
-            {
-                <option value="@p.IdProducto">@p.Descripcion</option>
-            }
+        <select name="IdProducto" id="IdProducto" asp-items="@Model.Producto" class="form-select">
         </select>
     </section>
     <section>
-        <label for="Cantidad">Cantidad</label>
-        <input type="number" class="form-control" asp-for="Cantidad" min="1" placeholder="1" required>
+        <label asp-for="Cantidad">Cantidad</label>
+        <input asp-for="Cantidad" class="form-control" min="1" placeholder="1" required>
     </section>
 
     <section class="text-center form-group align-items-center">
@@ -27,3 +23,5 @@
             asp-action="ListarPresupuestos">Volver</a>
     </section>
 </form>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}
