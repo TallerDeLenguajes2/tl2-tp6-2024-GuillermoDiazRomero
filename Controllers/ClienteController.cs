@@ -48,7 +48,7 @@ public class ClienteController : Controller
         return RedirectToAction("ListarClientes");
     }
 
-    [HttpPost("Eliminar")]
+    [HttpGet("Eliminar")]
     public IActionResult Eliminar(int id){
         repoClien.EliminarCliente(id);
         return RedirectToAction("ListarClientes");
